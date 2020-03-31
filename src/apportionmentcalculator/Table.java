@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
  * @author brorie3
  */
 public class Table {
-
+    
     private static JPanel table;
     private static int rows;
     private static int cols;
@@ -27,24 +27,30 @@ public class Table {
     private static ArrayList<JLabel> initial_v = new ArrayList<>();
     private static ArrayList<Integer> final_values = new ArrayList<>();
     private static ArrayList<JLabel> final_v = new ArrayList<>();
-
+    
+    private static JLabel stateTotal;
+    private static JLabel populationTotal;
+    private static JLabel quotaTotal;
+    private static JLabel initialTotal;
+    private static JLabel finalTotal;
+    
     public Table() {
         table = new JPanel();
     }
-
+    
     public Table(int rows, int cols, int seats) {
         table = new JPanel(new GridLayout(rows, cols));
         Table.rows = rows;
         Table.cols = cols;
         Table.seats = seats;
     }
-
+    
     public JPanel getInfo() {
         return table;
     }
-
+    
     public void setup() {
-
+        
         state_pops.clear();
         quotas.clear();
         state_quota_values.clear();
@@ -55,9 +61,9 @@ public class Table {
 
         //JPanel p = new JPanel(new GridLayout(rows, cols));
         table.setBackground(Color.CYAN);
-
+        
         for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols + 1; col++) {
+            for (int col = 0; col < cols + 2; col++) {
                 final JLabel label = new JLabel("", SwingConstants.CENTER);
                 if (row != 0) {
                     label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -68,7 +74,24 @@ public class Table {
                     label.setBorder(BorderFactory.createMatteBorder(2, 1, 1, 2, Color.BLACK));
                     label.setText("" + seats);
                 }
-
+                
+                if (row == 1 && col == cols + 1) {
+                    stateTotal = label;
+                    stateTotal.setText("" + cols);
+                }
+                if (row == 2 && col == cols + 1) {
+                    populationTotal = label;
+                }
+                if (row == 3 && col == cols + 1) {
+                    quotaTotal = label;
+                }
+                if (row == 4 && col == cols + 1) {
+                    initialTotal = label;
+                }
+                if (row == 5 && col == cols + 1) {
+                    finalTotal = label;
+                }
+                
                 if (row == 1 && col == 0) {
                     label.setText("State");
                 }
@@ -84,36 +107,38 @@ public class Table {
                 if (row == 5 && col == 0) {
                     label.setText("Final");
                 }
-
-                if (row == 1 && col != 0) {
+                
+                if (row == 1 && col != 0 && col != cols + 1) {
                     label.setText("S" + col);
                 }
-
-                if (row == 3 && col != 0) {
+                
+                if (row == 3 && col != 0 && col != cols + 1) {
                     state_quota_values.add(label);
                 }
-
-                if (row == 4 && col != 0) {
+                
+                if (row == 4 && col != 0 && col != cols + 1) {
                     initial_v.add(label);
                 }
-
-                if (row == 5 && col != 0) {
+                
+                if (row == 5 && col != 0 && col != cols + 1) {
                     final_v.add(label);
                 }
-
+                
                 if (row > 0 && col == 0) {
                     label.setBorder(BorderFactory.createMatteBorder(1, 2, 1, 1, Color.BLACK));
                 }
-
+                
                 if (row == 0) {
-
+                    
                     if (col == 0) {
                         label.setBorder(BorderFactory.createMatteBorder(2, 2, 1, 1, Color.BLACK));
                     }
-
+                    
                     if (col > 0) {
-                        if (col == cols) {
-                            label.setBorder(BorderFactory.createMatteBorder(2, 0, 1, 2, Color.BLACK));
+                        if (col == cols + 1) {
+                            label.setBorder(BorderFactory.createMatteBorder(2, 0, 1, 1, Color.BLACK));
+                        } else if (col == cols) {
+                            label.setBorder(BorderFactory.createMatteBorder(2, 0, 1, 1, Color.BLACK));
                         } else {
                             label.setBorder(BorderFactory.createMatteBorder(2, 0, 1, 0, Color.BLACK));
                         }
@@ -122,18 +147,18 @@ public class Table {
                         }
                     }
                 }
-
+                
                 if (row == 1 && col > 1) {
-                    if (col == cols) {
+                    if (col == cols + 1) {
                         label.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 2, Color.BLACK));
                     } else {
                         label.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
                     }
                 }
-                if (row == 3 && col == cols) {
+                if (row == 3 && col == cols + 1) {
                     label.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 2, Color.BLACK));
                 }
-                if (row == 4 && col == cols) {
+                if (row == 4 && col == cols + 1) {
                     label.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 2, Color.BLACK));
                 }
                 if (row == 5) {
@@ -142,19 +167,26 @@ public class Table {
                     } else {
                         label.setBorder(BorderFactory.createMatteBorder(1, 1, 2, 1, Color.BLACK));
                     }
-                    if (col == cols) {
+                    if (col == cols + 1) {
                         label.setBorder(BorderFactory.createMatteBorder(1, 1, 2, 2, Color.BLACK));
                     }
                 }
-
-                if (row == 2 & col != 0) {
+                
+                if (row == 2 && col == cols + 1) {
+                    label.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 2, Color.BLACK));
+                }
+                
+                if (row == 0 && col == cols + 1) {
+                    label.setBorder(BorderFactory.createMatteBorder(2, 1, 1, 2, Color.BLACK));
+                    label.setText("Total");
+                }
+                
+                if (row == 2 && col != 0 && col != cols + 1) {
                     JTextField tf = new JTextField();
                     state_pops.add(tf);
                     tf.setHorizontalAlignment(JTextField.CENTER);
                     tf.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    if (col == cols) {
-                        tf.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 2, Color.BLACK));
-                    }
+                    
                     table.add(tf);
                 } else {
                     table.add(label);
@@ -162,7 +194,7 @@ public class Table {
             }
         }
     }
-
+    
     public void hamiltonMethod() {
         System.out.println("TEST");
         ArrayList<Double> nums = new ArrayList<>();
@@ -175,15 +207,18 @@ public class Table {
             for (int i = 0; i < state_pops.size(); i++) {
                 total += Integer.parseInt(state_pops.get(i).getText());
             }
-
+            populationTotal.setText("" + total);
+            
+            double quotaDecimal = 0;
             //calculate the quotas for each state (decimal values)
             int divisor = total / seats;
             for (int i = 0; i < state_pops.size(); i++) {
                 double stateValue = Double.valueOf(state_pops.get(i).getText()) / divisor;
                 quotas.add(stateValue);
                 state_quota_values.get(i).setText(Double.toString(stateValue));
+                quotaDecimal += stateValue;
             }
-
+            
             int sum = 0;
 
             //get the decimal remainder of each quota
@@ -193,6 +228,10 @@ public class Table {
                 nums.add(v);
                 System.out.println("dvalue: " + v);
             }
+            
+            quotaTotal.setText("" + quotaDecimal);
+            initialTotal.setText("" + sum);
+            finalTotal.setText("" + seats);
 
             //add the lower quotas
             for (int i = 0; i < nums.size(); i++) {
@@ -212,33 +251,40 @@ public class Table {
             for (int i = 0; i < final_values.size(); i++) {
                 final_v.get(i).setText(Integer.toString(final_values.get(i)));
             }
-
+            
         } catch (NumberFormatException e) {
-
+            
         }
-
+        
     }
-
+    
     private static void prioritizeH(ArrayList<Double> decimals, ArrayList<Integer> list, int sum) {
-        if (sum != seats) {
-            //get the highest decimal
-            double max = Collections.max(decimals);
-            //locate the index of the highest decimal
-            int index = 0;
-            for (int i = 0; i < decimals.size(); i++) {
-                if (max == decimals.get(i)) {
-                    index = i;
-                    break;
+        try {
+            if (sum != seats) {
+                //get the highest decimal
+                double max = Collections.max(decimals);
+                //locate the index of the highest decimal
+                int index = 0;
+                for (int i = 0; i < decimals.size(); i++) {
+                    if (max == decimals.get(i)) {
+                        index = i;
+                        break;
+                    }
                 }
+                //increase the amount of seats of the list at the index of the highest decimal
+                list.set(index, list.get(index) + 1);
+                //lower the index of the decimal location in the decimal array (so we can resuse this method)
+                decimals.set(index, 0.0);
+                //check for more inequalities
+                sum += 1;
+                prioritizeH(decimals, list, sum);
             }
-            //increase the amount of seats of the list at the index of the highest decimal
-            list.set(index, list.get(index) + 1);
-            //lower the index of the decimal location in the decimal array (so we can resuse this method)
-            decimals.set(index, 0.0);
-            //check for more inequalities
-            sum += 1;
-            prioritizeH(decimals, list, sum);
+        } catch (StackOverflowError e) {
+            System.out.println("STACK OVERFLOW ERROR");
+            //clear the entries
+            
+            
         }
     }
-
+    
 }
