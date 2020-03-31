@@ -215,5 +215,27 @@ public class Table {
         }
 
     }
+    
+    private static void prioritizeH(ArrayList<Double> decimals, ArrayList<Integer> list, int sum) {
+        if (sum != seats) {
+            //get the highest decimal
+            double max = Collections.max(decimals);
+            //locate the index of the highest decimal
+            int index = 0;
+            for (int i = 0; i < decimals.size(); i++) {
+                if (max == decimals.get(i)) {
+                    index = i;
+                    break;
+                }
+            }
+            //increase the amount of seats of the list at the index of the highest decimal
+            list.set(index, list.get(index) + 1);
+            //lower the index of the decimal location in the decimal array (so we can resuse this method)
+            decimals.set(index, 0.0);
+            //check for more inequalities
+            sum += 1;
+            prioritizeH(decimals, list, sum);
+        }
+    }
 
 }
