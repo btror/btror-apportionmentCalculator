@@ -1,6 +1,5 @@
 package apportionmentcalculator;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -9,15 +8,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -33,7 +25,7 @@ public class Window {
     private static JFrame frame;
     private static JPanel panel;
     private static Table table;
-    private static JPanel bottom;
+//    private static JPanel bottom;
 
     private static int amountOfStates;
     private static int amountOfSeats;
@@ -45,7 +37,7 @@ public class Window {
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        panel = new JPanel(new GridLayout(2, 1));
+        panel = new JPanel(new GridLayout(1, 1));
         panel.setBackground(Color.PINK);
         frame.add(panel);
 
@@ -54,17 +46,15 @@ public class Window {
 
         panel.add(table.getInfo());
 
-        bottom = new JPanel(new BorderLayout());
-        bottom.setBackground(Color.PINK);
-        panel.add(bottom);
-
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream input = classLoader.getResourceAsStream("TICER2.png");
-        BufferedImage image = ImageIO.read(input);
-        BufferedImage resized = resize(image, 500, 500);
-        JLabel l = new JLabel(new ImageIcon(resized));
-        bottom.add(l);
-
+        //bottom = new JPanel(new BorderLayout());
+        //bottom.setBackground(Color.PINK);
+        //panel.add(bottom);
+//        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//        InputStream input = classLoader.getResourceAsStream("TICER2.png");
+//        BufferedImage image = ImageIO.read(input);
+//        BufferedImage resized = resize(image, 500, 500);
+//        JLabel l = new JLabel(new ImageIcon(resized));
+//        bottom.add(l);
         setupMenu();
 
         frame.setVisible(true);
@@ -105,41 +95,50 @@ public class Window {
             }
         });
 
+        JMenuItem jefferson = new JMenuItem("Execute Jefferson's Method");
+        jefferson.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+
         options.add(stateAmount);
         options.add(hamilton);
+        options.add(jefferson);
         menuBar.add(options);
         frame.setJMenuBar(menuBar);
     }
 
     public static void findStateAmount() {
-        try {
-            String m = JOptionPane.showInputDialog("Enter amount of states");
-            amountOfStates = Integer.parseInt(m);
-            String m1 = JOptionPane.showInputDialog("Enter amount of seats: ");
-            amountOfSeats = Integer.parseInt(m1);
-            panel.removeAll();
-            panel.revalidate();
-            panel.repaint();
-            table = new Table(6, amountOfStates, amountOfSeats);
-            table.setup();
-            JPanel p = table.getInfo();
-            panel.add(p);
-            bottom = new JPanel(new BorderLayout());
-            bottom.setBackground(Color.PINK);
-            panel.add(bottom);
+        //try {
+        String m = JOptionPane.showInputDialog("Enter amount of states");
+        amountOfStates = Integer.parseInt(m);
+        String m1 = JOptionPane.showInputDialog("Enter amount of seats: ");
+        amountOfSeats = Integer.parseInt(m1);
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
+        table = new Table(6, amountOfStates, amountOfSeats);
+        table.setup();
+        JPanel p = table.getInfo();
+        panel.add(p);
+//            bottom = new JPanel(new BorderLayout());
+//            bottom.setBackground(Color.PINK);
+//            panel.add(bottom);
 
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            InputStream input = classLoader.getResourceAsStream("TICER2.png");
-            BufferedImage image = ImageIO.read(input);
-            BufferedImage resized = resize(image, 500, 500);
-            JLabel l = new JLabel(new ImageIcon(resized));
-            bottom.add(l);
-
-        } catch (NumberFormatException e) {
-
-        } catch (IOException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//            InputStream input = classLoader.getResourceAsStream("TICER2.png");
+//            BufferedImage image = ImageIO.read(input);
+//            BufferedImage resized = resize(image, 500, 500);
+//            JLabel l = new JLabel(new ImageIcon(resized));
+//            bottom.add(l);
+//        } catch (NumberFormatException e) {
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
 }
+
