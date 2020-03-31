@@ -170,10 +170,13 @@ public class Table {
         quotas.clear();
         try {
 
+            //get the total population of every state
             int total = 0;
             for (int i = 0; i < state_pops.size(); i++) {
                 total += Integer.parseInt(state_pops.get(i).getText());
             }
+
+            //calculate the quotas for each state (decimal values)
             int divisor = total / seats;
             for (int i = 0; i < state_pops.size(); i++) {
                 double stateValue = Double.valueOf(state_pops.get(i).getText()) / divisor;
@@ -181,31 +184,31 @@ public class Table {
                 state_quota_values.get(i).setText(Double.toString(stateValue));
             }
 
+            int sum = 0;
+
+            //get the decimal remainder of each quota
             for (int i = 0; i < quotas.size(); i++) {
+                sum += Math.floor(quotas.get(i));
                 double v = quotas.get(i) - Math.floor(quotas.get(i));
                 nums.add(v);
                 System.out.println("dvalue: " + v);
             }
-            double max = Collections.max(nums);
-            int index = 0;
+
+            //add the lower quotas
             for (int i = 0; i < nums.size(); i++) {
-                if (max == nums.get(i)) {
-                    index = i;
-                    break;
-                }
-            }
-            for (int i = 0; i < nums.size(); i++) {
-                if (i == index) {
-                    final_values.add((int) Math.floor(quotas.get(i) + 1));
-                } else {
-                    final_values.add((int) Math.floor(quotas.get(i)));
-                }
+                final_values.add((int) Math.floor(quotas.get(i)));
                 initial_values.add((int) Math.floor(quotas.get(i)));
             }
+
+            //prioritize for the final quotas
+            prioritizeH(nums, final_values, sum);
+
+            //output lower quota
             for (int i = 0; i < initial_values.size(); i++) {
                 initial_v.get(i).setText(Integer.toString(initial_values.get(i)));
             }
 
+            //output final quota
             for (int i = 0; i < final_values.size(); i++) {
                 final_v.get(i).setText(Integer.toString(final_values.get(i)));
             }
@@ -215,7 +218,7 @@ public class Table {
         }
 
     }
-    
+
     private static void prioritizeH(ArrayList<Double> decimals, ArrayList<Integer> list, int sum) {
         if (sum != seats) {
             //get the highest decimal
