@@ -2,12 +2,9 @@ package apportionmentcalculator;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,8 +22,6 @@ public class Window {
     private static JFrame frame;
     private static JPanel panel;
     private static Table table;
-//    private static JPanel bottom;
-
     private static int amountOfStates;
     private static int amountOfSeats;
 
@@ -46,28 +41,10 @@ public class Window {
 
         panel.add(table.getInfo());
 
-        //bottom = new JPanel(new BorderLayout());
-        //bottom.setBackground(Color.PINK);
-        //panel.add(bottom);
-//        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//        InputStream input = classLoader.getResourceAsStream("TICER2.png");
-//        BufferedImage image = ImageIO.read(input);
-//        BufferedImage resized = resize(image, 500, 500);
-//        JLabel l = new JLabel(new ImageIcon(resized));
-//        bottom.add(l);
         setupMenu();
 
         frame.setVisible(true);
 
-    }
-
-    private static BufferedImage resize(BufferedImage img, int height, int width) {
-        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
     }
 
     public static void setupMenu() {
@@ -99,7 +76,7 @@ public class Window {
         jefferson.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                table.jeffersonMethod();
             }
         });
 
@@ -111,7 +88,6 @@ public class Window {
     }
 
     public static void findStateAmount() {
-        //try {
         String m = JOptionPane.showInputDialog("Enter amount of states");
         amountOfStates = Integer.parseInt(m);
         String m1 = JOptionPane.showInputDialog("Enter amount of seats: ");
@@ -123,21 +99,6 @@ public class Window {
         table.setup();
         JPanel p = table.getInfo();
         panel.add(p);
-//            bottom = new JPanel(new BorderLayout());
-//            bottom.setBackground(Color.PINK);
-//            panel.add(bottom);
-
-//            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//            InputStream input = classLoader.getResourceAsStream("TICER2.png");
-//            BufferedImage image = ImageIO.read(input);
-//            BufferedImage resized = resize(image, 500, 500);
-//            JLabel l = new JLabel(new ImageIcon(resized));
-//            bottom.add(l);
-//        } catch (NumberFormatException e) {
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
 }
