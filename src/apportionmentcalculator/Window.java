@@ -49,7 +49,7 @@ public class Window {
 
     public static void setupMenu() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu options = new JMenu("options");
+        JMenu options = new JMenu("Calculate");
 
         JMenuItem stateAmount = new JMenuItem("Change Amount of States");
 
@@ -102,4 +102,3 @@ public class Window {
     }
 
 }
-
