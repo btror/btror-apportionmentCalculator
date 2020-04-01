@@ -33,6 +33,7 @@ public class Table {
     private static JLabel quotaTotal;
     private static JLabel initialTotal;
     private static JLabel finalTotal;
+    private static JLabel divisorlabel;
 
     public Table() {
         table = new JPanel();
@@ -69,11 +70,10 @@ public class Table {
                     label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 } else if (row == 0 && col == 0) {
                     label.setBorder(BorderFactory.createMatteBorder(2, 2, 1, 1, Color.BLACK));
-                    label.setText("Seats");
-                } else if (row == 0 && col == 1) {
-                    label.setBorder(BorderFactory.createMatteBorder(2, 1, 1, 2, Color.BLACK));
-                    label.setText("" + seats);
-                }
+                    label.setText("Seats: " + seats);
+                    label.setOpaque(true);
+                    label.setBackground(Color.ORANGE);
+                } 
 
                 if (row == 1 && col == cols + 1) {
                     stateTotal = label;
@@ -181,6 +181,19 @@ public class Table {
                     label.setText("Total");
                 }
 
+                if (row == 0 && col == 1) {
+                    label.setText("Divisor: ");
+                    label.setBorder(BorderFactory.createMatteBorder(2, 1, 1, 1, Color.BLACK));
+                    divisorlabel = label;
+                    label.setOpaque(true);
+                    label.setBackground(Color.ORANGE);
+                }
+                
+                if (row == 0 && col == 2) {
+                    label.setBorder(BorderFactory.createMatteBorder(2, 1, 1, 0, Color.BLACK));
+                }
+                
+
                 if (row == 2 && col != 0 && col != cols + 1) {
                     JTextField tf = new JTextField();
                     state_pops.add(tf);
@@ -213,7 +226,8 @@ public class Table {
 
             double quotaDecimal = 0;
             //calculate the quotas for each state (decimal values)
-            int divisor = total / seats;
+            double divisor = (total * 1.0) / seats;
+            divisorlabel.setText("Divisor: " + divisor);
             for (int i = 0; i < state_pops.size(); i++) {
                 double stateValue = Double.valueOf(state_pops.get(i).getText()) / divisor;
                 quotas.add(stateValue);
@@ -306,7 +320,8 @@ public class Table {
 
             //calculate the quotas for each state (decimal values)
             double quotaDecimal = 0;
-            int divisor = total / seats;
+            double divisor = (total * 1.0) / seats;
+            divisorlabel.setText("Divisor: " + divisor);
             for (int i = 0; i < state_pops.size(); i++) {
                 double stateValue = Double.valueOf(state_pops.get(i).getText()) / divisor;
                 quotas.add(stateValue);
@@ -352,7 +367,7 @@ public class Table {
         }
     }
 
-    private static void prioritizeJ(int sum, int divisor) {
+    private static void prioritizeJ(int sum, double divisor) {
         try {
             //ArrayList<Double> nums = new ArrayList<>();
             if (sum != seats) {
